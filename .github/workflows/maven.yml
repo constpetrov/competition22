@@ -33,4 +33,4 @@ jobs:
         KEY: ${{ secrets.KEY }}
         source: "./target/competition22-1.0-SNAPSHOT.jar"
         target: "/usr/competition22/"
-        use_insecure_cypher: true
+        use_insecure_cipher: true
