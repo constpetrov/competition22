@@ -30,7 +30,8 @@ jobs:
         HOST: ${{ secrets.HOST }}
         USERNAME: ${{ secrets.USERNAME }}
         PORT: ${{ secrets.PORT }}
-        KEY: ${{ secrets.KEY }}
+#        KEY: ${{ secrets.KEY }}
+        PASSWORD: ${{ secrets.PASSWORD }}
         source: "./target/competition22-1.0-SNAPSHOT.jar"
         target: "/usr/competition22/"
         use_insecure_cipher: true
