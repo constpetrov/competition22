@@ -27,11 +27,11 @@ jobs:
     - name: copy file via ssh key
       uses: appleboy/scp-action@master
       with:
-        HOST: ${{ secrets.HOST }}
-        USERNAME: ${{ secrets.USERNAME }}
-        PORT: ${{ secrets.PORT }}
-#        KEY: ${{ secrets.KEY }}
-        PASSWORD: ${{ secrets.PASSWORD }}
+        host: ${{ secrets.HOST }}
+        username: ${{ secrets.USERNAME }}
+        port: ${{ secrets.PORT }}
+        key: ${{ secrets.KEY }}
+       # password: ${{ secrets.PASSWORD }}
         source: "./target/competition22-1.0-SNAPSHOT.jar"
         target: "/usr/competition22/"
         use_insecure_cipher: true
