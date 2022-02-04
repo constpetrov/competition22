@@ -35,8 +35,7 @@ jobs:
         key: ${{ secrets.KEY }}
         source: "./target/competition22-1.0-SNAPSHOT.jar"
         target: "/usr/competition22/"
-        strip-components: 1
-        use_insecure_cipher: true
+        strip_components: 1
     - name: Run the jar
       uses: appleboy/ssh-action@master
       with:
