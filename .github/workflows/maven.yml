@@ -45,4 +45,5 @@ jobs:
         port: ${{ secrets.PORT }}
         script: |
           chmod +x /usr/competition22/competition22-1.0-SNAPSHOT.jar
-          java -jar /usr/competition22/competition22-1.0-SNAPSHOT.jar
+          killall java
+          nohup java -jar /usr/competition22/competition22-1.0-SNAPSHOT.jar &
