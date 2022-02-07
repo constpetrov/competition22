@@ -33,7 +33,7 @@ jobs:
         username: ${{ secrets.USERNAME }}
         port: ${{ secrets.PORT }}
         key: ${{ secrets.KEY }}
-        source: "./target/competition22-1.0-SNAPSHOT.jar"
+        source: "./target/competition22-1.0-SNAPSHOT-jar-with-dependencies.jar"
         target: "/usr/competition22/"
         strip_components: 2
 #    - name: Run the jar
