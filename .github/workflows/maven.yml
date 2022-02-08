@@ -36,14 +36,11 @@ jobs:
         source: "./target/competition22-1.0-SNAPSHOT-jar-with-dependencies.jar"
         target: "/usr/competition22/"
         strip_components: 2
-#    - name: Run the jar
-#      uses: appleboy/ssh-action@master
-#      with:
-#        host: ${{ secrets.HOST }}
-#        username: ${{ secrets.USERNAME }}
-#        key: ${{ secrets.KEY }}
-#        port: ${{ secrets.PORT }}
-#        script: |
-#          chmod +x /usr/competition22/competition22-1.0-SNAPSHOT.jar
-#          killall java
-#          nohup java -jar /usr/competition22/competition22-1.0-SNAPSHOT.jar &
+    - name: Run the jar
+      uses: appleboy/ssh-action@master
+      with:
+        host: ${{ secrets.HOST }}
+        username: ${{ secrets.USERNAME }}
+        key: ${{ secrets.KEY }}
+        port: ${{ secrets.PORT }}
+        script: sudo systemctl restart competition22
