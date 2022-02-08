@@ -43,4 +43,4 @@ jobs:
         username: ${{ secrets.USERNAME }}
         key: ${{ secrets.KEY }}
         port: ${{ secrets.PORT }}
-        script: systemctl restart competition22
+        script: sudo /bin/systemctl restart competition22.service
