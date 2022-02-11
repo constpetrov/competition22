@@ -1,34 +1,20 @@
 package org.example.competition22;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.node.ObjectNode;
-import com.sun.net.httpserver.HttpExchange;
-import com.sun.net.httpserver.HttpHandler;
-import com.sun.net.httpserver.HttpServer;
+import org.glassfish.grizzly.http.server.HttpServer;
+import org.glassfish.jersey.grizzly2.httpserver.GrizzlyHttpServerFactory;
+import org.glassfish.jersey.jackson.JacksonFeature;
+import org.glassfish.jersey.server.ResourceConfig;
 
-import java.io.IOException;
-import java.io.OutputStream;
-import java.net.InetSocketAddress;
+import javax.ws.rs.core.UriBuilder;
+import java.net.URI;
 
 public class Main {
     public static void main(String[] args) throws Exception {
-        HttpServer server = HttpServer.create(new InetSocketAddress(8080), 0);
-        server.createContext("/", new MyHandler());
-        server.setExecutor(null);
+        URI baseUri = UriBuilder.fromUri("http://localhost/").port(8080).build();
+        ResourceConfig config = new ResourceConfig(MainResource.class, JsonMapperProvider.class, JacksonFeature.class);
+        HttpServer server = GrizzlyHttpServerFactory.createHttpServer(baseUri, config, false);
+        Runtime.getRuntime().addShutdownHook(new Thread(server::shutdownNow));
         server.start();
-    }
-
-    static class MyHandler implements HttpHandler {
-        @Override
-        public void handle(HttpExchange exchange) throws IOException {
-            ObjectMapper mapper = new ObjectMapper();
-            ObjectNode response = mapper.createObjectNode();
-            response.put("message", "Hello World!");
-            String responseString = mapper.writeValueAsString(response);
-            exchange.sendResponseHeaders(200, responseString.length());
-            OutputStream os = exchange.getResponseBody();
-            os.write(responseString.getBytes());
-            os.close();
-        }
+        Thread.currentThread().join();
     }
 }
