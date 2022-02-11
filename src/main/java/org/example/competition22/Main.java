@@ -10,7 +10,7 @@ import java.net.URI;
 
 public class Main {
     public static void main(String[] args) throws Exception {
-        URI baseUri = UriBuilder.fromUri("http://localhost/").port(8080).build();
+        URI baseUri = UriBuilder.fromUri("http://0.0.0.0/").port(8080).build();
         ResourceConfig config = new ResourceConfig(MainResource.class, JsonMapperProvider.class, JacksonFeature.class);
         HttpServer server = GrizzlyHttpServerFactory.createHttpServer(baseUri, config, false);
         Runtime.getRuntime().addShutdownHook(new Thread(server::shutdownNow));
