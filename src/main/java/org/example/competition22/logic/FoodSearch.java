@@ -14,7 +14,7 @@ public class FoodSearch {
         var longestPath = request.board.height + request.board.width;
 
         request.board.food.stream().map(foodCoordinate -> getDirection(request.you.head, foodCoordinate))
-                .forEach(direction -> weights.put(direction, (int) ((float) longestPath / (float) direction.getDistance())));
+                .forEach(direction -> weights.put(direction, (longestPath - direction.getDistance())));
 
         for (var foodDirection : weights.keySet()) {
             directions.put(foodDirection.getFirstDirection(), directions.get(foodDirection.getFirstDirection()) + weights.get(foodDirection));
