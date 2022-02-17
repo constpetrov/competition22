@@ -12,7 +12,7 @@ public class WallsChecker {
             var possibleMove = Coordinate.getNextCoordinate(request.you.head, direction);
             if (possibleMove.x < 0 || possibleMove.x == request.board.width
                     || possibleMove.y < 0 || possibleMove.y == request.board.height) {
-                directions.put(direction, 0);
+                directions.put(direction, -1);
             }
         }
     }

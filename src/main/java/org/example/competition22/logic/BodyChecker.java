@@ -14,7 +14,7 @@ public class BodyChecker {
             var possibleMove = Coordinate.getNextCoordinate(request.you.head, direction);
             for (Coordinate coordinate : request.you.body.subList(0, request.you.body.size()-1)) {
                 if (coordinate.equals(possibleMove)) {
-                    directions.put(direction, 0);
+                    directions.put(direction, -1);
                 }
             }
         }

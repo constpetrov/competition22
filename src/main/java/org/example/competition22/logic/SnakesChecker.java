@@ -17,7 +17,7 @@ public class SnakesChecker {
                     List<Coordinate> body = snake.body.subList(0, snake.body.size()-1);
                     for (Coordinate coordinate : body) {
                         if (coordinate.equals(possibleMove)) {
-                            directions.put(direction, 0);
+                            directions.put(direction, -1);
                         }
                     }
                 }
