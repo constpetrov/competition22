@@ -11,9 +11,10 @@ import java.util.Map;
 public class FoodSearch {
     public static void searchFood(MoveRequest request, Map<Direction, Integer> directions) {
         Map<FoodDirection, Integer> weights = new HashMap<>();
+        var longestPath = request.board.height + request.board.width;
 
         request.board.food.stream().map(foodCoordinate -> getDirection(request.you.head, foodCoordinate))
-                .forEach(direction -> weights.put(direction, (int) (20.0 / (float) direction.getDistance())));
+                .forEach(direction -> weights.put(direction, (int) ((float) longestPath / (float) direction.getDistance())));
 
         for (var foodDirection : weights.keySet()) {
             directions.put(foodDirection.getFirstDirection(), directions.get(foodDirection.getFirstDirection()) + weights.get(foodDirection));
