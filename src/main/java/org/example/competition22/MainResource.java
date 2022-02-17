@@ -1,11 +1,12 @@
 package org.example.competition22;
 
-import org.example.competition22.data.Coordinate;
+import org.example.competition22.data.Board;
 import org.example.competition22.data.Direction;
 import org.example.competition22.data.EndRequest;
 import org.example.competition22.data.MoveRequest;
 import org.example.competition22.data.MoveResponse;
 import org.example.competition22.data.RootResponse;
+import org.example.competition22.data.Snake;
 import org.example.competition22.data.StartRequest;
 
 import javax.ws.rs.Consumes;
@@ -14,6 +15,7 @@ import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
+import java.util.HashMap;
 import java.util.Map;
 
 @Path("/")
@@ -73,6 +75,12 @@ public class MainResource {
     }
 
     private Map<Direction, Integer> assignWeights(MoveRequest moveRequest) {
-        return null;
+        Map<Direction, Integer> result = new HashMap<>();
+        doNotHitWalls(moveRequest.board, moveRequest.you, result);
+        return result;
+    }
+
+    private void doNotHitWalls(Board board, Snake you, Map<Direction, Integer> result) {
+
     }
 }
