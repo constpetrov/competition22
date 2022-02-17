@@ -27,11 +27,11 @@ public class SnakesChecker {
     }
 
     private static void avoidHeadCollision(Snake we, Snake enemy, Map<Direction, Integer> directions) {
-        if (enemy.length < we.length) return; // we will win collision
+        double weight = enemy.length < we.length ? 2 : 0.5;
         directions.keySet().forEach(direction -> {
             enemy.head.neighbours().forEach(enemyCoord -> {
                 final Coordinate ourCoord = Coordinate.getNextCoordinate(we.head, direction);
-                if (enemyCoord.equals(ourCoord)) directions.put(direction, directions.get(direction)/2);
+                if (enemyCoord.equals(ourCoord)) directions.put(direction, (int)(directions.get(direction)*weight));
             });
         });
     }
