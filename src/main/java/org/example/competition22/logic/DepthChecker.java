@@ -15,7 +15,7 @@ public class DepthChecker {
     public static void check(MoveRequest request, Map<Direction, Integer> directions) {
         directions.keySet().forEach(direction -> {
             final Set<Coordinate> obstacles = request.board.snakes.stream()
-                    .flatMap(s -> s.body.stream())
+                    .flatMap(s -> s.body.subList(0,s.body.size()-1).stream())
                     .collect(Collectors.toSet());
             final Coordinate nextCoordinate = Coordinate.getNextCoordinate(request.you.head, direction);
             LongAdder acc = new LongAdder();
