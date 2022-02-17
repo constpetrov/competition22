@@ -11,9 +11,7 @@ public class BodyChecker {
     public static void check(MoveRequest request, Map<Direction, Integer> directions) {
         for (Direction direction : Direction.values()) {
             var possibleMove = Coordinate.getNextCoordinate(request.you.head, direction);
-            List<Coordinate> body = request.you.body;
-            if (body.size() > 1) body = body.subList(0, body.size()-1);
-            for (Coordinate coordinate : body) {
+            for (Coordinate coordinate : request.you.body.subList(0, request.you.body.size()-1)) {
                 if (coordinate.equals(possibleMove)) {
                     directions.put(direction, 0);
                 }
