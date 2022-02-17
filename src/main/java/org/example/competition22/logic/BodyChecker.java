@@ -9,6 +9,7 @@ import java.util.Map;
 
 public class BodyChecker {
     public static void check(MoveRequest request, Map<Direction, Integer> directions) {
+        if (request.you.body.size() == 1) return;
         for (Direction direction : Direction.values()) {
             var possibleMove = Coordinate.getNextCoordinate(request.you.head, direction);
             for (Coordinate coordinate : request.you.body.subList(0, request.you.body.size()-1)) {

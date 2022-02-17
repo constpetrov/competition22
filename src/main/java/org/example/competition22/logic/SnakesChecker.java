@@ -13,10 +13,12 @@ public class SnakesChecker {
         for (Direction direction : Direction.values()) {
             var possibleMove = Coordinate.getNextCoordinate(request.you.head, direction);
             for (var snake : request.board.snakes) {
-                List<Coordinate> body = snake.body.subList(0, snake.body.size()-1);
-                for (Coordinate coordinate : body) {
-                    if (coordinate.equals(possibleMove)) {
-                        directions.put(direction, 0);
+                if (snake.length > 1) {
+                    List<Coordinate> body = snake.body.subList(0, snake.body.size()-1);
+                    for (Coordinate coordinate : body) {
+                        if (coordinate.equals(possibleMove)) {
+                            directions.put(direction, 0);
+                        }
                     }
                 }
                 avoidHeadCollision(request.you, snake, directions);
