@@ -1,14 +1,20 @@
 package org.example.competition22;
 
-import org.example.competition22.data.*;
+import org.example.competition22.data.Coordinate;
+import org.example.competition22.data.Direction;
+import org.example.competition22.data.EndRequest;
+import org.example.competition22.data.MoveRequest;
+import org.example.competition22.data.MoveResponse;
+import org.example.competition22.data.RootResponse;
+import org.example.competition22.data.StartRequest;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
+import java.util.Map;
 
 @Path("/")
 public class MainResource {
@@ -50,7 +56,15 @@ public class MainResource {
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public MoveResponse move(MoveRequest moveRequest) {
+        Map<Coordinate, Integer> result = assignWeights(moveRequest);
+        return new MoveResponse(pickBest(result).name(), moveRequest.you.toString());
+    }
 
-        return new MoveResponse(Direction.UP, moveRequest.you.toString());
+    private Direction pickBest(Map<Coordinate, Integer> result) {
+        return null;
+    }
+
+    private Map<Coordinate, Integer> assignWeights(MoveRequest moveRequest) {
+        return null;
     }
 }
