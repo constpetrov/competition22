@@ -76,7 +76,7 @@ public class MainResource {
     }
 
     private Direction pickBest(Map<Direction, Integer> result) {
-        int bestWeight = 0;
+        int bestWeight = -1;
         for (Map.Entry<Direction, Integer> entry : result.entrySet()) {
             if (entry.getValue() > bestWeight) {
                 bestWeight = entry.getValue();
