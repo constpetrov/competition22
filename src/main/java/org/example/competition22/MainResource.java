@@ -57,7 +57,7 @@ public class MainResource {
     @Produces(MediaType.APPLICATION_JSON)
     public MoveResponse move(MoveRequest moveRequest) {
         Map<Coordinate, Integer> result = assignWeights(moveRequest);
-        return new MoveResponse(pickBest(result).name(), moveRequest.you.toString());
+        return new MoveResponse(pickBest(result), moveRequest.you.toString());
     }
 
     private Direction pickBest(Map<Coordinate, Integer> result) {
