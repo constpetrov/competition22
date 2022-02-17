@@ -14,8 +14,6 @@ public class BodyChecker {
                 if (coordinate.equals(possibleMove)) {
                     directions.put(direction, 0);
                     break;
-                } else {
-                    directions.put(direction, 1);
                 }
             }
         }
