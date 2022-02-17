@@ -98,7 +98,7 @@ public class MainResource {
             result.put(direction, 100);
         }
         FoodSearch.searchFood(moveRequest, result);
-        DepthChecker.check(moveRequest, result);
+//        DepthChecker.check(moveRequest, result);
 //        RegionChecker.check(moveRequest, result);
         BodyChecker.check(moveRequest, result);
         SnakesChecker.check(moveRequest, result);
