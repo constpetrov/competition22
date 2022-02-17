@@ -8,6 +8,7 @@ import org.example.competition22.data.MoveResponse;
 import org.example.competition22.data.RootResponse;
 import org.example.competition22.data.Snake;
 import org.example.competition22.data.StartRequest;
+import org.example.competition22.logic.BodyChecker;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
@@ -77,6 +78,7 @@ public class MainResource {
 
     private Map<Direction, Integer> assignWeights(MoveRequest moveRequest) {
         Map<Direction, Integer> result = new HashMap<>();
+        BodyChecker.check(moveRequest, result);
         doNotHitWalls(moveRequest.board, moveRequest.you, result);
         return result;
     }
