@@ -22,4 +22,13 @@ public class MoveRequest {
         this.board = board;
         this.you = you;
     }
+
+    @Override
+    public String toString() {
+        return "MoveRequest{" +
+                "turn=" + turn +
+                ", board=" + board +
+                ", you=" + you +
+                '}';
+    }
 }

@@ -24,4 +24,14 @@ public class Board {
         this.food = food;
         this.snakes = snakes;
     }
+
+    @Override
+    public String toString() {
+        return "Board{" +
+                "height=" + height +
+                ", width=" + width +
+                ", food=" + food +
+                ", snakes=" + snakes +
+                '}';
+    }
 }

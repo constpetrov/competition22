@@ -62,9 +62,17 @@ public class MainResource {
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public MoveResponse move(MoveRequest moveRequest) {
-        Map<Direction, Integer> result = assignWeights(moveRequest);
+        try {
+            System.out.println(moveRequest);
+            Map<Direction, Integer> result = assignWeights(moveRequest);
 
-        return new MoveResponse(pickBest(result), moveRequest.you.toString());
+            final Direction move = pickBest(result);
+            System.out.println("Result = " + move);
+            return new MoveResponse(move, "");
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw e;
+        }
     }
 
     private Direction pickBest(Map<Direction, Integer> result) {
