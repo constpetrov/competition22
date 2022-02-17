@@ -11,7 +11,7 @@ public class SnakesChecker {
         for (Direction direction : Direction.values()) {
             var possibleMove = Coordinate.getNextCoordinate(request.you.head, direction);
             for (var snake : request.board.snakes) {
-                for (Coordinate coordinate : snake.body) {
+                for (Coordinate coordinate : snake.body.subList(0,snake.body.size()-1)) {
                     if (coordinate.equals(possibleMove)) {
                         directions.put(direction, 0);
                     }
