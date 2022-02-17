@@ -83,7 +83,7 @@ public class MainResource {
         return bestDirections.get((int)(Math.random()*bestDirections.size()));
     }
 
-    private Map<Direction, Integer> assignWeights(MoveRequest moveRequest) {
+    Map<Direction, Integer> assignWeights(MoveRequest moveRequest) {
         Map<Direction, Integer> result = new HashMap<>();
         for (Direction direction : Direction.values()) {
             result.put(direction, 10);
