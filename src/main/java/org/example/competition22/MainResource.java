@@ -56,15 +56,23 @@ public class MainResource {
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public MoveResponse move(MoveRequest moveRequest) {
-        Map<Coordinate, Integer> result = assignWeights(moveRequest);
+        Map<Direction, Integer> result = assignWeights(moveRequest);
         return new MoveResponse(pickBest(result), moveRequest.you.toString());
     }
 
-    private Direction pickBest(Map<Coordinate, Integer> result) {
-        return null;
+    private Direction pickBest(Map<Direction, Integer> result) {
+        int bestWeight = 0;
+        Direction bestDirection = Direction.UP;
+        for (Map.Entry<Direction, Integer> entry : result.entrySet()) {
+            if (entry.getValue() > bestWeight) {
+                bestWeight = entry.getValue();
+                bestDirection = entry.getKey();
+            }
+        }
+        return bestDirection;
     }
 
-    private Map<Coordinate, Integer> assignWeights(MoveRequest moveRequest) {
+    private Map<Direction, Integer> assignWeights(MoveRequest moveRequest) {
         return null;
     }
 }
