@@ -59,7 +59,6 @@ public class MainResourceTest {
     }
 
     @Test
-    @Ignore
     public void shouldGoUp() {
         MoveRequest moveRequest = new MoveRequest(82,
                 new Board(7, 7, Arrays.asList(
@@ -76,6 +75,6 @@ public class MainResourceTest {
         assertEquals(-1, (int) directionIntegerMap.get(Direction.LEFT));
         assertEquals(-1, (int) directionIntegerMap.get(Direction.RIGHT));
         assertEquals(-1, (int) directionIntegerMap.get(Direction.DOWN));
-        assertTrue((int) directionIntegerMap.get(Direction.UP) > 0);
+        assertTrue(directionIntegerMap.get(Direction.UP) > 0);
     }
 }
