@@ -21,7 +21,7 @@ public class SnakesChecker {
                         }
                     }
                 }
-                avoidHeadCollision(request.you, snake, directions);
+                if (!snake.id.equals(request.you.id)) avoidHeadCollision(request.you, snake, directions);
             }
         }
     }

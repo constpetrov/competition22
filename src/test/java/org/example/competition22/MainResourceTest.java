@@ -5,6 +5,7 @@ import org.example.competition22.data.*;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Map;
 
@@ -39,5 +40,23 @@ public class MainResourceTest {
         assertEquals(0, (int) directionIntegerMap.get(Direction.UP));
     }
 
-
+    @Test
+    public void shouldGoUp() {
+        MoveRequest moveRequest = new MoveRequest(82,
+                new Board(7, 7, Arrays.asList(
+                        new Coordinate(6,5),
+                        new Coordinate(5,6), new Coordinate(1,4)),
+                        Arrays.asList(
+                                new Snake("gs_vMJ6HHQG7Q4rFXBvqDFPkKcT", "Jawa dev - oleg", 99,
+                                        Arrays.asList(new Coordinate(3,1), new Coordinate(2,1), new Coordinate(1,1), new Coordinate(1,0), new Coordinate(2,0), new Coordinate(3,0), new Coordinate(4,0), new Coordinate(5,0), new Coordinate(5,1), new Coordinate(4,1), new Coordinate(4,2), new Coordinate(5,2), new Coordinate(5,3), new Coordinate(4,3), new Coordinate(3,3), new Coordinate(2,3)),
+                                        "167", new Coordinate(3,1), 16))),
+                new Snake("gs_vMJ6HHQG7Q4rFXBvqDFPkKcT", "Jawa dev - oleg", 99,
+                        Arrays.asList(new Coordinate(3,1), new Coordinate(2,1), new Coordinate(1,1), new Coordinate(1,0), new Coordinate(2,0), new Coordinate(3,0), new Coordinate(4,0), new Coordinate(5,0), new Coordinate(5,1), new Coordinate(4,1), new Coordinate(4,2), new Coordinate(5,2), new Coordinate(5,3), new Coordinate(4,3), new Coordinate(3,3), new Coordinate(2,3)),
+                        "167", new Coordinate(3,1), 16));
+        Map<Direction, Integer> directionIntegerMap = new MainResource().assignWeights(moveRequest);
+        assertEquals(0, (int) directionIntegerMap.get(Direction.LEFT));
+        assertEquals(0, (int) directionIntegerMap.get(Direction.RIGHT));
+        assertEquals(0, (int) directionIntegerMap.get(Direction.DOWN));
+        assertTrue((int) directionIntegerMap.get(Direction.UP) > 0);
+    }
 }
