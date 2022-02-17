@@ -1,13 +1,15 @@
 package org.example.competition22.data;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class Coordinate {
-    public final int x;
-    public final int y;
+    @JsonProperty public final int x;
+    @JsonProperty public final int y;
 
     @JsonCreator
-    public Coordinate(int x, int y) {
+    public Coordinate(@JsonProperty("x") int x,
+                      @JsonProperty("y") int y) {
         this.x = x;
         this.y = y;
     }

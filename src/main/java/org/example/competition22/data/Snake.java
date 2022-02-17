@@ -1,24 +1,40 @@
 package org.example.competition22.data;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.List;
 
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Snake {
+    @JsonProperty
     public final String id;
+    @JsonProperty
     public final String name;
+    @JsonProperty
     public final int health;
+    @JsonProperty
     public final List<Coordinate> body;
+    @JsonProperty
     public final String latency;
+    @JsonProperty
     public final Coordinate head;
+    @JsonProperty
     public final int length;
-//    public final String shout;
-//    public final String squad;
-//    public final Customizations customizations;
+//    @JsonProperty public final String shout;
+//    @JsonProperty public final String squad;
+//    @JsonProperty public final Customizations customizations;
 
 
     @JsonCreator
-    public Snake(String id, String name, int health, List<Coordinate> body, String latency, Coordinate head, int length) {
+    public Snake(@JsonProperty("id") String id,
+                 @JsonProperty("name") String name,
+                 @JsonProperty("health") int health,
+                 @JsonProperty("body") List<Coordinate> body,
+                 @JsonProperty("latency") String latency,
+                 @JsonProperty("head") Coordinate head,
+                 @JsonProperty("length") int length) {
         this.id = id;
         this.name = name;
         this.health = health;
