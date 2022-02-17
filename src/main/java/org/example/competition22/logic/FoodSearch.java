@@ -7,12 +7,13 @@ import org.example.competition22.data.MoveRequest;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.OptionalDouble;
 import java.util.OptionalInt;
 
 public class FoodSearch {
     public static void searchFood(MoveRequest request, Map<Direction, Integer> directions) {
-        final OptionalInt maxLength = request.board.snakes.stream().mapToInt(s -> s.length).max();
-        if (request.you.length >= maxLength.orElse(Integer.MAX_VALUE)) return;
+        final OptionalDouble maxLength = request.board.snakes.stream().mapToInt(s -> s.length).average();
+        if (request.you.health > 33 && request.you.length >= maxLength.orElse(Integer.MAX_VALUE)) return;
 
         Map<FoodDirection, Integer> weights = new HashMap<>();
         var longestPath = request.board.height + request.board.width;
