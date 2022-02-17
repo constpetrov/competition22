@@ -7,6 +7,7 @@ import org.example.competition22.data.MoveResponse;
 import org.example.competition22.data.RootResponse;
 import org.example.competition22.data.StartRequest;
 import org.example.competition22.logic.BodyChecker;
+import org.example.competition22.logic.DepthChecker;
 import org.example.competition22.logic.FoodSearch;
 import org.example.competition22.logic.SnakesChecker;
 import org.example.competition22.logic.WallsChecker;
@@ -94,9 +95,10 @@ public class MainResource {
     Map<Direction, Integer> assignWeights(MoveRequest moveRequest) {
         Map<Direction, Integer> result = new HashMap<>();
         for (Direction direction : Direction.values()) {
-            result.put(direction, 10);
+            result.put(direction, 100);
         }
         FoodSearch.searchFood(moveRequest, result);
+        DepthChecker.check(moveRequest, result);
         BodyChecker.check(moveRequest, result);
         SnakesChecker.check(moveRequest, result);
         WallsChecker.check(moveRequest, result);
