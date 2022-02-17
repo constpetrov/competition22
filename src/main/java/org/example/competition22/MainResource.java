@@ -6,10 +6,7 @@ import org.example.competition22.data.MoveRequest;
 import org.example.competition22.data.MoveResponse;
 import org.example.competition22.data.RootResponse;
 import org.example.competition22.data.StartRequest;
-import org.example.competition22.logic.BodyChecker;
-import org.example.competition22.logic.FoodSearch;
-import org.example.competition22.logic.SnakesChecker;
-import org.example.competition22.logic.WallsChecker;
+import org.example.competition22.logic.*;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
@@ -97,6 +94,7 @@ public class MainResource {
             result.put(direction, 10);
         }
         FoodSearch.searchFood(moveRequest, result);
+        RegionChecker.check(moveRequest, result);
         BodyChecker.check(moveRequest, result);
         SnakesChecker.check(moveRequest, result);
         WallsChecker.check(moveRequest, result);
