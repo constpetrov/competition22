@@ -4,6 +4,7 @@ import org.example.competition22.data.Coordinate;
 import org.example.competition22.data.Direction;
 import org.example.competition22.data.MoveRequest;
 
+import java.util.List;
 import java.util.Map;
 
 public class SnakesChecker {
@@ -11,7 +12,9 @@ public class SnakesChecker {
         for (Direction direction : Direction.values()) {
             var possibleMove = Coordinate.getNextCoordinate(request.you.head, direction);
             for (var snake : request.board.snakes) {
-                for (Coordinate coordinate : snake.body.subList(0,snake.body.size()-1)) {
+                List<Coordinate> body = snake.body;
+                if (body.size() > 1) body = body.subList(0, body.size()-1);
+                for (Coordinate coordinate : body) {
                     if (coordinate.equals(possibleMove)) {
                         directions.put(direction, 0);
                     }
