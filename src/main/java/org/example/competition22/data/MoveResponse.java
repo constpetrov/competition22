@@ -5,14 +5,14 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class MoveResponse {
     @JsonProperty
-    public final Direction move;
+    public final String move;
     @JsonProperty
     public final String shout;
 
     @JsonCreator
     public MoveResponse(@JsonProperty("move") Direction move,
                         @JsonProperty("shout") String shout) {
-        this.move = move;
+        this.move = move.toString();
         this.shout = shout;
     }
 }
