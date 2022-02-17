@@ -2,6 +2,7 @@ package org.example.competition22;
 
 
 import org.example.competition22.data.*;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -9,8 +10,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.Map;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 @RunWith(org.junit.runners.JUnit4.class)
 public class MainResourceTest {
@@ -41,6 +41,24 @@ public class MainResourceTest {
     }
 
     @Test
+    public void assignWeightsTestDontGoInClosedSpace() {
+        MainResource mainResource = new MainResource();
+        Coordinate head = new Coordinate(3, 4);
+        var body = Arrays.asList(head, new Coordinate(3, 3), new Coordinate(4, 3));
+        Snake you = new Snake("", "", 5, body, "", head, 3);
+        Board board = new Board(5, 5, Collections.emptyList(), Collections.singletonList(you));
+        MoveRequest moveRequest = new MoveRequest(1, board, you);
+        Map<Direction, Integer> directionIntegerMap = mainResource.assignWeights(moveRequest);
+
+        assertEquals(-1, (int) directionIntegerMap.get(Direction.RIGHT));
+        assertEquals(-1, (int) directionIntegerMap.get(Direction.DOWN));
+        assertEquals(-1, (int) directionIntegerMap.get(Direction.UP));
+
+        assertNotEquals(-1, (int) directionIntegerMap.get(Direction.LEFT));
+    }
+
+    @Test
+    @Ignore
     public void shouldGoUp() {
         MoveRequest moveRequest = new MoveRequest(82,
                 new Board(7, 7, Arrays.asList(

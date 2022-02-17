@@ -11,32 +11,26 @@ import java.util.Set;
 public class RegionChecker {
     public static void check(MoveRequest request, Map<Direction, Integer> directions) {
         for (Direction direction : Direction.values()) {
-            if (getRegionArea(request, Coordinate.getNextCoordinate(request.you.body.get(0), direction), new HashSet<Coordinate>()) >= request.you.length) {
+            if (getRegionArea(request, Coordinate.getNextCoordinate(request.you.head, direction), new HashSet<Coordinate>()) <= request.you.length) {
                 directions.put(direction, -1);
             }
         }
     }
 
     private static int getRegionArea(MoveRequest request, Coordinate coordinate, Set<Coordinate> visited) {
-        if (visited.contains(coordinate)) {
+        if (visited.contains(coordinate) ||
+                !isOnBoard(request, coordinate) ||
+                request.board.snakes.stream().anyMatch(snake -> snake.body.contains(coordinate))) {
             return 0;
-        }
-
-        visited.add(coordinate);
-        int[] area = {0};
-        if (request.board.snakes.stream().noneMatch(snake -> snake.body.contains(coordinate)) &&
-                request.board.height < coordinate.y &&
-                request.board.width < coordinate.x &&
-                coordinate.y >= 0 && coordinate.x >= 0) {
-            area[0] = 1;
-        }
-        coordinate.neighbours().forEach(c -> {
-            if (isOnBoard(request, c)) {
-                area[0] += getRegionArea(request, c, visited);
+        } else {
+            visited.add(coordinate);
+            for (Coordinate c : coordinate.neighbours()) {
+                if (!visited.contains(c) && isOnBoard(request, c)) {
+                    return 1 + getRegionArea(request, c, visited);
+                }
             }
-        });
-
-        return area[0];
+        }
+        return 0;
     }
 
     private static boolean isOnBoard(MoveRequest request, Coordinate c) {
