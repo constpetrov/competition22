@@ -10,8 +10,8 @@ public class WallsChecker {
     public static void check(MoveRequest request, Map<Direction, Integer> directions) {
         for (Direction direction : Direction.values()) {
             var possibleMove = Coordinate.getNextCoordinate(request.you.head, direction);
-            if (possibleMove.x == 0 || possibleMove.x == request.board.width
-                    || possibleMove.y == 0 || possibleMove.y == request.board.height) {
+            if (possibleMove.x < 0 || possibleMove.x == request.board.width
+                    || possibleMove.y < 0 || possibleMove.y == request.board.height) {
                 directions.put(direction, 0);
             }
         }
