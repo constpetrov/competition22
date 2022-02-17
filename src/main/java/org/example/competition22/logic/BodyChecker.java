@@ -13,7 +13,6 @@ public class BodyChecker {
             for (Coordinate coordinate : request.you.body) {
                 if (coordinate.equals(possibleMove)) {
                     directions.put(direction, 0);
-                    break;
                 }
             }
         }

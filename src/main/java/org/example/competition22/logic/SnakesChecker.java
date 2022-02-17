@@ -14,7 +14,6 @@ public class SnakesChecker {
                 for (Coordinate coordinate : snake.body) {
                     if (coordinate.equals(possibleMove)) {
                         directions.put(direction, 0);
-                        break;
                     }
                 }
             }
