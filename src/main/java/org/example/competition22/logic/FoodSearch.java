@@ -39,7 +39,7 @@ public class FoodSearch {
     }
 
     private static class FoodDirection {
-        private List<Move> moves;
+        private List<Move> moves = new java.util.ArrayList<>();
         private int distance;
 
         public FoodDirection() {
