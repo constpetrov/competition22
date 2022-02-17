@@ -27,13 +27,13 @@ public class FoodSearch {
         var deltaY = food.y - head.y;
         if (deltaX > 0) {
             direction.add(new Move(Direction.RIGHT, deltaX));
-        } else {
+        } else if (deltaX < 0) {
             direction.add(new Move(Direction.LEFT, deltaX));
         }
 
         if (deltaY > 0) {
             direction.add(new Move(Direction.UP, deltaY));
-        } else {
+        } else if (deltaY < 0) {
             direction.add(new Move(Direction.DOWN, deltaY));
         }
         return direction;
