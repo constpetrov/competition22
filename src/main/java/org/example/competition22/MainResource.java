@@ -1,15 +1,14 @@
 package org.example.competition22;
 
-import org.example.competition22.data.Board;
 import org.example.competition22.data.Direction;
 import org.example.competition22.data.EndRequest;
 import org.example.competition22.data.MoveRequest;
 import org.example.competition22.data.MoveResponse;
 import org.example.competition22.data.RootResponse;
-import org.example.competition22.data.Snake;
 import org.example.competition22.data.StartRequest;
 import org.example.competition22.logic.BodyChecker;
 import org.example.competition22.logic.SnakesChecker;
+import org.example.competition22.logic.WallsChecker;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
@@ -79,13 +78,13 @@ public class MainResource {
 
     private Map<Direction, Integer> assignWeights(MoveRequest moveRequest) {
         Map<Direction, Integer> result = new HashMap<>();
+        for (Direction direction : Direction.values()) {
+            result.put(direction, 10);
+        }
         BodyChecker.check(moveRequest, result);
         SnakesChecker.check(moveRequest, result);
-        doNotHitWalls(moveRequest.board, moveRequest.you, result);
+        WallsChecker.check(moveRequest, result);
         return result;
     }
 
-    private void doNotHitWalls(Board board, Snake you, Map<Direction, Integer> result) {
-
-    }
 }
