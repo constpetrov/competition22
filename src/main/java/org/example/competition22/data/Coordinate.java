@@ -13,4 +13,13 @@ public class Coordinate {
         this.x = x;
         this.y = y;
     }
+
+    public static Coordinate getNextCoordinate(Coordinate head, Direction direction) {
+        return switch (direction) {
+            case UP -> new Coordinate(head.x, head.y + 1);
+            case DOWN -> new Coordinate(head.x, head.y - 1);
+            case LEFT -> new Coordinate(head.x - 1, head.y);
+            case RIGHT -> new Coordinate(head.x + 1, head.y);
+        };
+    }
 }

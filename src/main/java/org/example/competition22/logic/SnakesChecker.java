@@ -6,16 +6,18 @@ import org.example.competition22.data.MoveRequest;
 
 import java.util.Map;
 
-public class BodyChecker {
+public class SnakesChecker {
     public static void check(MoveRequest request, Map<Direction, Integer> directions) {
         for (Direction direction : Direction.values()) {
             var possibleMove = Coordinate.getNextCoordinate(request.you.head, direction);
-            for (Coordinate coordinate : request.you.body) {
-                if (coordinate.equals(possibleMove)) {
-                    directions.put(direction, 0);
-                    break;
-                } else {
-                    directions.put(direction, 1);
+            for (var snake : request.board.snakes) {
+                for (Coordinate coordinate : snake.body) {
+                    if (coordinate.equals(possibleMove)) {
+                        directions.put(direction, 0);
+                        break;
+                    } else {
+                        directions.put(direction, 1);
+                    }
                 }
             }
         }
