@@ -37,7 +37,7 @@ public class MainResourceTest {
         MoveRequest moveRequest = new MoveRequest(1, board, you);
         Map<Direction, Integer> directionIntegerMap = mainResource.assignWeights(moveRequest);
 
-        assertEquals(0, (int) directionIntegerMap.get(Direction.UP));
+        assertEquals(-1, (int) directionIntegerMap.get(Direction.UP));
     }
 
     @Test
@@ -54,9 +54,9 @@ public class MainResourceTest {
                         Arrays.asList(new Coordinate(3,1), new Coordinate(2,1), new Coordinate(1,1), new Coordinate(1,0), new Coordinate(2,0), new Coordinate(3,0), new Coordinate(4,0), new Coordinate(5,0), new Coordinate(5,1), new Coordinate(4,1), new Coordinate(4,2), new Coordinate(5,2), new Coordinate(5,3), new Coordinate(4,3), new Coordinate(3,3), new Coordinate(2,3)),
                         "167", new Coordinate(3,1), 16));
         Map<Direction, Integer> directionIntegerMap = new MainResource().assignWeights(moveRequest);
-        assertEquals(0, (int) directionIntegerMap.get(Direction.LEFT));
-        assertEquals(0, (int) directionIntegerMap.get(Direction.RIGHT));
-        assertEquals(0, (int) directionIntegerMap.get(Direction.DOWN));
+        assertEquals(-1, (int) directionIntegerMap.get(Direction.LEFT));
+        assertEquals(-1, (int) directionIntegerMap.get(Direction.RIGHT));
+        assertEquals(-1, (int) directionIntegerMap.get(Direction.DOWN));
         assertTrue((int) directionIntegerMap.get(Direction.UP) > 0);
     }
 }
