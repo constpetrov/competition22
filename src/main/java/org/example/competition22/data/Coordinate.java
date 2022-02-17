@@ -3,6 +3,8 @@ package org.example.competition22.data;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import java.util.Arrays;
+import java.util.List;
 import java.util.Objects;
 
 public class Coordinate {
@@ -14,6 +16,15 @@ public class Coordinate {
                       @JsonProperty("y") int y) {
         this.x = x;
         this.y = y;
+    }
+
+    public List<Coordinate> neighbours() {
+        return Arrays.asList(
+                new Coordinate(x, y+1),
+                new Coordinate(x, y-1),
+                new Coordinate(x+1, y),
+                new Coordinate(x-1, y)
+        );
     }
 
     public static Coordinate getNextCoordinate(Coordinate head, Direction direction) {
