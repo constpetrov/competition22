@@ -4,6 +4,7 @@ import org.example.competition22.data.MoveRequest;
 import org.example.competition22.data.MoveResponse;
 import org.example.competition22.data.PingResponse;
 import org.example.competition22.data.RootResponse;
+import org.example.competition22.data.StartRequest;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
@@ -31,6 +32,14 @@ public class MainResource {
     @Produces(MediaType.APPLICATION_JSON)
     public RootResponse root() {
         return rootResponse;
+    }
+
+    @GET
+    @Path("/start")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.TEXT_PLAIN)
+    public String startGame(StartRequest startRequest) {
+        return startRequest.you.name;
     }
 
     @GET
