@@ -17,7 +17,9 @@ import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @Path("/")
@@ -67,14 +69,18 @@ public class MainResource {
 
     private Direction pickBest(Map<Direction, Integer> result) {
         int bestWeight = 0;
-        Direction bestDirection = Direction.values()[(int)(Math.random()*Direction.values().length)];
         for (Map.Entry<Direction, Integer> entry : result.entrySet()) {
             if (entry.getValue() > bestWeight) {
                 bestWeight = entry.getValue();
-                bestDirection = entry.getKey();
             }
         }
-        return bestDirection;
+        List<Direction> bestDirections = new ArrayList<>();
+        for (Map.Entry<Direction, Integer> entry : result.entrySet()) {
+            if (entry.getValue() == bestWeight) {
+                bestDirections.add(entry.getKey());
+            }
+        }
+        return bestDirections.get((int)(Math.random()*bestDirections.size()));
     }
 
     private Map<Direction, Integer> assignWeights(MoveRequest moveRequest) {
