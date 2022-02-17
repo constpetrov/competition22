@@ -3,6 +3,7 @@ package org.example.competition22;
 import org.example.competition22.data.MoveRequest;
 import org.example.competition22.data.MoveResponse;
 import org.example.competition22.data.PingResponse;
+import org.example.competition22.data.RootResponse;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
@@ -14,12 +15,22 @@ import javax.ws.rs.core.MediaType;
 
 @Path("/")
 public class MainResource {
+    private final RootResponse rootResponse = new RootResponse();
+
+
     @GET
+    @Path("/info")
     @Produces(MediaType.TEXT_PLAIN)
     public String getIt() {
         return String.join(" ",
                 System.getProperty("os.name"), System.getProperty("os.version"), System.getProperty("os.arch"),
                 System.getProperty("java.vendor"), System.getProperty("java.version"), "\n");
+    }
+
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public RootResponse root() {
+        return rootResponse;
     }
 
     @GET
