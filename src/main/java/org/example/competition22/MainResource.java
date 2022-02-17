@@ -1,5 +1,6 @@
 package org.example.competition22;
 
+import org.example.competition22.data.EndRequest;
 import org.example.competition22.data.MoveRequest;
 import org.example.competition22.data.MoveResponse;
 import org.example.competition22.data.PingResponse;
@@ -18,7 +19,6 @@ import javax.ws.rs.core.MediaType;
 public class MainResource {
     private final RootResponse rootResponse = new RootResponse();
 
-
     @GET
     @Path("/info")
     @Produces(MediaType.TEXT_PLAIN)
@@ -34,7 +34,7 @@ public class MainResource {
         return rootResponse;
     }
 
-    @GET
+    @POST
     @Path("/start")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.TEXT_PLAIN)
@@ -42,11 +42,12 @@ public class MainResource {
         return startRequest.you.name;
     }
 
-    @GET
-    @Path("/ping/{item}")
-    @Produces(MediaType.APPLICATION_JSON)
-    public PingResponse ping(@PathParam("item") String item) {
-        return new PingResponse(item);
+    @POST
+    @Path("/end")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.TEXT_PLAIN)
+    public String endGame(EndRequest endRequest) {
+        return endRequest.you.name;
     }
 
     @POST
