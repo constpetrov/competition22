@@ -1,11 +1,6 @@
 package org.example.competition22;
 
-import org.example.competition22.data.EndRequest;
-import org.example.competition22.data.MoveRequest;
-import org.example.competition22.data.MoveResponse;
-import org.example.competition22.data.PingResponse;
-import org.example.competition22.data.RootResponse;
-import org.example.competition22.data.StartRequest;
+import org.example.competition22.data.*;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
@@ -56,6 +51,6 @@ public class MainResource {
     @Produces(MediaType.APPLICATION_JSON)
     public MoveResponse move(MoveRequest moveRequest) {
 
-        return new MoveResponse("up", moveRequest.you.toString());
+        return new MoveResponse(Direction.UP, moveRequest.you.toString());
     }
 }
