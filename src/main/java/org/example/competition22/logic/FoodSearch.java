@@ -17,7 +17,7 @@ public class FoodSearch {
             request.board.food.stream()
                     .map(foodCoordinate -> getDirection(request.you.head, foodCoordinate))
                     .min(FoodDirection::compareTo) // go to the closest food
-                    .ifPresent(foodDirection -> directions.put(foodDirection.getFirstDirection(), longestPath - foodDirection.getDistance()));
+                    .ifPresent(foodDirection -> directions.put(foodDirection.getFirstDirection(), directions.get(foodDirection.getFirstDirection()) + longestPath - foodDirection.getDistance()));
         }
     }
 
