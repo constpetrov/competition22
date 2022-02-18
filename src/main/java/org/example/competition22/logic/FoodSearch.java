@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Map;
 
 public class FoodSearch {
-    public static void searchFood(MoveRequest request, Map<Direction, Integer> directions) {
+    public static void searchFood(MoveRequest request, Map<Direction, Double> directions) {
         var longestPath = request.board.height + request.board.width;
         final var maxLength = request.board.snakes.stream().map(s -> s.length).max(Integer::compareTo).get(); //there is always at least one snake
         if (request.you.health < 1.5 * longestPath || //we are not healthy enough
@@ -17,13 +17,14 @@ public class FoodSearch {
             request.board.food.stream()
                     .map(foodCoordinate -> getDirection(request.you.head, foodCoordinate))
                     .min(FoodDirection::compareTo) // go to the closest food
-                    .ifPresent(foodDirection -> directions.put(foodDirection.getFirstDirection(), directions.get(foodDirection.getFirstDirection()) + longestPath - foodDirection.getDistance()));
+                    .ifPresent(foodDirection ->
+                            foodDirection.moves.forEach(move -> directions.computeIfPresent(move.direction, (k,v) -> v * 2)));
         } else {
             dePrioritizeFood(request, directions);
         }
     }
 
-    private static void dePrioritizeFood(MoveRequest request, Map<Direction, Integer> directions) {
+    private static void dePrioritizeFood(MoveRequest request, Map<Direction, Double> directions) {
         directions.keySet().forEach(direction -> {
             final Coordinate move = Coordinate.getNextCoordinate(request.you.head, direction);
             if (request.board.food.contains(move)) {

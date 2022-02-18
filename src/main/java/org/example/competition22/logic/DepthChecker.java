@@ -12,7 +12,7 @@ import java.util.concurrent.atomic.LongAdder;
 import java.util.stream.Collectors;
 
 public class DepthChecker {
-    public static void check(MoveRequest request, Map<Direction, Integer> directions) {
+    public static void check(MoveRequest request, Map<Direction, Double> directions) {
         directions.keySet().forEach(direction -> {
             final Set<Coordinate> obstacles = request.board.snakes.stream()
                     .flatMap(s -> s.body.subList(0,s.body.size()-1).stream())
@@ -21,7 +21,7 @@ public class DepthChecker {
             LongAdder acc = new LongAdder();
             calcDepth(nextCoordinate, new HashSet<>(obstacles), request.board, acc);
             final double score = acc.doubleValue() / (request.board.width * request.board.height);
-            directions.put(direction, (int) (directions.get(direction) * score));
+            directions.put(direction, directions.get(direction) * score);
         });
     }
 

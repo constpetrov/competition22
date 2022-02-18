@@ -33,9 +33,9 @@ public class MainResourceTest {
         Snake you = new Snake("", "", 5, Collections.singletonList(new Coordinate(2, 2)), "", new Coordinate(2, 2), 2);
         Board board = new Board(5, 5, Collections.emptyList(), Collections.singletonList(you));
         MoveRequest moveRequest = new MoveRequest(getStandardGame(), 1, board, you);
-        Map<Direction, Integer> directionIntegerMap = mainResource.assignWeights(moveRequest);
+        Map<Direction, Double> directionIntegerMap = mainResource.assignWeights(moveRequest);
 
-        for (Map.Entry<Direction, Integer> entry : directionIntegerMap.entrySet()) {
+        for (Map.Entry<Direction, Double> entry : directionIntegerMap.entrySet()) {
             assertTrue(entry.getValue() > 0);
         }
     }
@@ -47,9 +47,9 @@ public class MainResourceTest {
         Snake you = new Snake("", "", 5, Collections.singletonList(head), "", head, 2);
         Board board = new Board(5, 5, Collections.emptyList(), Collections.singletonList(you));
         MoveRequest moveRequest = new MoveRequest(getStandardGame(), 1, board, you);
-        Map<Direction, Integer> directionIntegerMap = mainResource.assignWeights(moveRequest);
+        Map<Direction, Double> directionIntegerMap = mainResource.assignWeights(moveRequest);
 
-        assertEquals(-1, (int) directionIntegerMap.get(Direction.UP));
+        assertEquals(-1, directionIntegerMap.get(Direction.UP).intValue());
     }
 
     @Test
@@ -61,13 +61,13 @@ public class MainResourceTest {
         Snake you = new Snake("", "", 5, body, "", head, 3);
         Board board = new Board(5, 5, Collections.emptyList(), Collections.singletonList(you));
         MoveRequest moveRequest = new MoveRequest(getStandardGame(), 1, board, you);
-        Map<Direction, Integer> directionIntegerMap = mainResource.assignWeights(moveRequest);
+        Map<Direction, Double> directionIntegerMap = mainResource.assignWeights(moveRequest);
 
-        assertEquals(-1, (int) directionIntegerMap.get(Direction.RIGHT));
-        assertEquals(-1, (int) directionIntegerMap.get(Direction.DOWN));
-        assertEquals(-1, (int) directionIntegerMap.get(Direction.UP));
+        assertEquals(-1, directionIntegerMap.get(Direction.RIGHT).intValue());
+        assertEquals(-1, directionIntegerMap.get(Direction.DOWN).intValue());
+        assertEquals(-1, directionIntegerMap.get(Direction.UP).intValue());
 
-        assertNotEquals(-1, (int) directionIntegerMap.get(Direction.LEFT));
+        assertNotEquals(-1, directionIntegerMap.get(Direction.LEFT).intValue());
     }
 
     @Test
@@ -83,10 +83,10 @@ public class MainResourceTest {
                 new Snake("gs_vMJ6HHQG7Q4rFXBvqDFPkKcT", "Jawa dev - oleg", 99,
                         Arrays.asList(new Coordinate(3, 1), new Coordinate(2, 1), new Coordinate(1, 1), new Coordinate(1, 0), new Coordinate(2, 0), new Coordinate(3, 0), new Coordinate(4, 0), new Coordinate(5, 0), new Coordinate(5, 1), new Coordinate(4, 1), new Coordinate(4, 2), new Coordinate(5, 2), new Coordinate(5, 3), new Coordinate(4, 3), new Coordinate(3, 3), new Coordinate(2, 3)),
                         "167", new Coordinate(3, 1), 16));
-        Map<Direction, Integer> directionIntegerMap = new MainResource().assignWeights(moveRequest);
-        assertEquals(-1, (int) directionIntegerMap.get(Direction.LEFT));
-        assertEquals(-1, (int) directionIntegerMap.get(Direction.RIGHT));
-        assertEquals(-1, (int) directionIntegerMap.get(Direction.DOWN));
+        Map<Direction, Double> directionIntegerMap = new MainResource().assignWeights(moveRequest);
+        assertEquals(-1, directionIntegerMap.get(Direction.LEFT).intValue());
+        assertEquals(-1, directionIntegerMap.get(Direction.RIGHT).intValue());
+        assertEquals(-1, directionIntegerMap.get(Direction.DOWN).intValue());
         assertTrue(directionIntegerMap.get(Direction.UP) > 0);
     }
 

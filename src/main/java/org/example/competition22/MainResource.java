@@ -65,7 +65,7 @@ public class MainResource {
     public MoveResponse move(MoveRequest moveRequest) {
         try {
             System.out.println(moveRequest);
-            Map<Direction, Integer> result = assignWeights(moveRequest);
+            Map<Direction, Double> result = assignWeights(moveRequest);
 
             final Direction move = pickBest(result);
             System.out.println("Result = " + move);
@@ -76,26 +76,26 @@ public class MainResource {
         }
     }
 
-    private Direction pickBest(Map<Direction, Integer> result) {
-        int bestWeight = Integer.MIN_VALUE;
-        for (Map.Entry<Direction, Integer> entry : result.entrySet()) {
+    private Direction pickBest(Map<Direction, Double> result) {
+        double bestWeight = Double.NEGATIVE_INFINITY;
+        for (Map.Entry<Direction, Double> entry : result.entrySet()) {
             if (entry.getValue() > bestWeight) {
                 bestWeight = entry.getValue();
             }
         }
         List<Direction> bestDirections = new ArrayList<>();
-        for (Map.Entry<Direction, Integer> entry : result.entrySet()) {
-            if (entry.getValue() == bestWeight) {
+        for (Map.Entry<Direction, Double> entry : result.entrySet()) {
+            if (almostEqual(entry.getValue(), bestWeight)) {
                 bestDirections.add(entry.getKey());
             }
         }
         return bestDirections.get((int)(Math.random()*bestDirections.size()));
     }
 
-    Map<Direction, Integer> assignWeights(MoveRequest moveRequest) {
-        Map<Direction, Integer> result = new HashMap<>();
+    Map<Direction, Double> assignWeights(MoveRequest moveRequest) {
+        Map<Direction, Double> result = new HashMap<>();
         for (Direction direction : Direction.values()) {
-            result.put(direction, 100);
+            result.put(direction, 100.0);
         }
         FoodSearch.searchFood(moveRequest, result);
         DepthChecker.check(moveRequest, result);
@@ -105,4 +105,7 @@ public class MainResource {
         return result;
     }
 
+    public static boolean almostEqual(double a, double b) {
+        return Math.abs(a - b) < 1e-6;
+    }
 }

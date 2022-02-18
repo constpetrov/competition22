@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Map;
 
 public class SnakesChecker {
-    public static void check(MoveRequest request, Map<Direction, Integer> directions) {
+    public static void check(MoveRequest request, Map<Direction, Double> directions) {
         for (Direction direction : Direction.values()) {
             var possibleMove = Coordinate.getNextCoordinate(request.you.head, direction);
             for (var snake : request.board.snakes) {
@@ -17,7 +17,7 @@ public class SnakesChecker {
                     List<Coordinate> body = snake.body.subList(0, snake.body.size()-1);
                     for (Coordinate coordinate : body) {
                         if (coordinate.equals(possibleMove)) {
-                            directions.put(direction, -1);
+                            directions.put(direction, -1.0);
                         }
                     }
                 }
@@ -26,12 +26,12 @@ public class SnakesChecker {
         }
     }
 
-    private static void avoidHeadCollision(Snake we, Snake enemy, Map<Direction, Integer> directions) {
-        double weight = enemy.length < we.length ? 2 : 0.5;
+    private static void avoidHeadCollision(Snake we, Snake enemy, Map<Direction, Double> directions) {
+        double weight = enemy.length < we.length ? 2 : 0.3;
         directions.keySet().forEach(direction -> {
             enemy.head.neighbours().forEach(enemyCoord -> {
                 final Coordinate ourCoord = Coordinate.getNextCoordinate(we.head, direction);
-                if (enemyCoord.equals(ourCoord)) directions.put(direction, (int)(directions.get(direction)*weight));
+                if (enemyCoord.equals(ourCoord)) directions.put(direction, directions.get(direction) * weight);
             });
         });
     }
