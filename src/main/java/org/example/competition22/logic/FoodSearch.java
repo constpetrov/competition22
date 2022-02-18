@@ -18,7 +18,18 @@ public class FoodSearch {
                     .map(foodCoordinate -> getDirection(request.you.head, foodCoordinate))
                     .min(FoodDirection::compareTo) // go to the closest food
                     .ifPresent(foodDirection -> directions.put(foodDirection.getFirstDirection(), directions.get(foodDirection.getFirstDirection()) + longestPath - foodDirection.getDistance()));
+        } else {
+            dePrioritizeFood(request, directions);
         }
+    }
+
+    private static void dePrioritizeFood(MoveRequest request, Map<Direction, Integer> directions) {
+        directions.keySet().forEach(direction -> {
+            final Coordinate move = Coordinate.getNextCoordinate(request.you.head, direction);
+            if (request.board.food.contains(move)) {
+                directions.put(direction, directions.get(direction) / 10);
+            }
+        });
     }
 
     private static FoodDirection getDirection(Coordinate head, Coordinate food) {
