@@ -1,17 +1,16 @@
 package org.example.competition22.data;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-
 public enum Direction {
-    @JsonProperty("up")
-    UP,
+    UP("up"), DOWN("down"), LEFT("left"), RIGHT("right");
 
-    @JsonProperty("down")
-    DOWN,
+    private final String name;
 
-    @JsonProperty("left")
-    LEFT,
+    Direction(String name) {
+        this.name = name;
+    }
 
-    @JsonProperty("right")
-    RIGHT;
+    @Override
+    public String toString() {
+        return name;
+    }
 }
