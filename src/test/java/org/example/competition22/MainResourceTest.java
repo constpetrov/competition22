@@ -27,7 +27,7 @@ public class MainResourceTest {
     public void assignWeightsTestGoAnywhere() {
         MainResource mainResource = new MainResource();
         Snake you = new Snake("", "", 5, Collections.singletonList(new Coordinate(2, 2)), "", new Coordinate(2, 2), 2);
-        Board board = new Board(5, 5, Collections.emptyList(), Collections.emptyList());
+        Board board = new Board(5, 5, Collections.emptyList(), Collections.singletonList(you));
         MoveRequest moveRequest = new MoveRequest(1, board, you);
         Map<Direction, Integer> directionIntegerMap = mainResource.assignWeights(moveRequest);
 
