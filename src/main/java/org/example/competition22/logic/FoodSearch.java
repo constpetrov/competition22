@@ -7,7 +7,6 @@ import org.example.competition22.data.MoveRequest;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.OptionalDouble;
 import java.util.OptionalInt;
 
 public class FoodSearch {

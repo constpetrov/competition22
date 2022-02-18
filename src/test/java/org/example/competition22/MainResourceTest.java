@@ -1,7 +1,12 @@
 package org.example.competition22;
 
 
-import org.example.competition22.data.*;
+import org.example.competition22.data.Board;
+import org.example.competition22.data.Coordinate;
+import org.example.competition22.data.Direction;
+import org.example.competition22.data.MoveRequest;
+import org.example.competition22.data.MoveResponse;
+import org.example.competition22.data.Snake;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -11,8 +16,9 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.Map;
 
-import static org.example.competition22.logic.RegionChecker.isOnBoard;
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotEquals;
+import static org.junit.Assert.assertTrue;
 
 @RunWith(org.junit.runners.JUnit4.class)
 public class MainResourceTest {
@@ -104,6 +110,10 @@ public class MainResourceTest {
         return isHealthy(request.you.health) &&
                 !hasCollidedWithBody(request) &&
                 isOnBoard(request, request.you.head);
+    }
+
+    private boolean isOnBoard(MoveRequest request, Coordinate head) {
+        return head.x >= 0 && head.x < request.board.width && head.y >= 0 && head.y < request.board.height;
     }
 
     private boolean isHealthy(int you) {

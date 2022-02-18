@@ -4,7 +4,6 @@ import org.example.competition22.data.Coordinate;
 import org.example.competition22.data.Direction;
 import org.example.competition22.data.MoveRequest;
 
-import java.util.List;
 import java.util.Map;
 
 public class BodyChecker {
