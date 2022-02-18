@@ -4,8 +4,11 @@ package org.example.competition22;
 import org.example.competition22.data.Board;
 import org.example.competition22.data.Coordinate;
 import org.example.competition22.data.Direction;
+import org.example.competition22.data.Game;
 import org.example.competition22.data.MoveRequest;
 import org.example.competition22.data.MoveResponse;
+import org.example.competition22.data.Ruleset;
+import org.example.competition22.data.RulesetName;
 import org.example.competition22.data.Snake;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -14,6 +17,7 @@ import org.junit.runner.RunWith;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.List;
 import java.util.Map;
 
 import static org.junit.Assert.assertEquals;
@@ -28,7 +32,7 @@ public class MainResourceTest {
         MainResource mainResource = new MainResource();
         Snake you = new Snake("", "", 5, Collections.singletonList(new Coordinate(2, 2)), "", new Coordinate(2, 2), 2);
         Board board = new Board(5, 5, Collections.emptyList(), Collections.singletonList(you));
-        MoveRequest moveRequest = new MoveRequest(1, board, you);
+        MoveRequest moveRequest = new MoveRequest(getStandardGame(), 1, board, you);
         Map<Direction, Integer> directionIntegerMap = mainResource.assignWeights(moveRequest);
 
         for (Map.Entry<Direction, Integer> entry : directionIntegerMap.entrySet()) {
@@ -42,7 +46,7 @@ public class MainResourceTest {
         Coordinate head = new Coordinate(2, 4);
         Snake you = new Snake("", "", 5, Collections.singletonList(head), "", head, 2);
         Board board = new Board(5, 5, Collections.emptyList(), Collections.singletonList(you));
-        MoveRequest moveRequest = new MoveRequest(1, board, you);
+        MoveRequest moveRequest = new MoveRequest(getStandardGame(), 1, board, you);
         Map<Direction, Integer> directionIntegerMap = mainResource.assignWeights(moveRequest);
 
         assertEquals(-1, (int) directionIntegerMap.get(Direction.UP));
@@ -56,7 +60,7 @@ public class MainResourceTest {
         var body = Arrays.asList(head, new Coordinate(3, 3), new Coordinate(4, 3));
         Snake you = new Snake("", "", 5, body, "", head, 3);
         Board board = new Board(5, 5, Collections.emptyList(), Collections.singletonList(you));
-        MoveRequest moveRequest = new MoveRequest(1, board, you);
+        MoveRequest moveRequest = new MoveRequest(getStandardGame(), 1, board, you);
         Map<Direction, Integer> directionIntegerMap = mainResource.assignWeights(moveRequest);
 
         assertEquals(-1, (int) directionIntegerMap.get(Direction.RIGHT));
@@ -68,7 +72,7 @@ public class MainResourceTest {
 
     @Test
     public void shouldGoUp() {
-        MoveRequest moveRequest = new MoveRequest(82,
+        MoveRequest moveRequest = new MoveRequest(getStandardGame(), 82,
                 new Board(7, 7, Arrays.asList(
                         new Coordinate(6, 5),
                         new Coordinate(5, 6), new Coordinate(1, 4)),
@@ -91,7 +95,7 @@ public class MainResourceTest {
         MainResource mainResource = new MainResource();
         Snake you = new Snake("", "", 5, Arrays.asList(new Coordinate(2, 2), new Coordinate(1, 2), new Coordinate(0,2)), "", new Coordinate(2, 2), 2);
         Board board = new Board(5, 5, Collections.emptyList(), Collections.singletonList(you));
-        MoveRequest moveRequest = new MoveRequest(1, board, you);
+        MoveRequest moveRequest = new MoveRequest(getStandardGame(), 1, board, you);
         for (int i = 0; i < 100; i++) {
             var response = mainResource.move(moveRequest);
             moveRequest = updateMoveRequest(moveRequest, response);
@@ -103,7 +107,7 @@ public class MainResourceTest {
         var newBody = new ArrayList<Coordinate>();
         newBody.add(Coordinate.getNextCoordinate(request.you.head, Direction.valueOf(response.move.toUpperCase())));
         newBody.addAll(request.you.body.subList(0, request.you.body.size() - 1));
-        return new MoveRequest(request.turn + 1, request.board, new Snake(request.you.id, request.you.name, request.you.health, newBody, request.you.latency, newBody.get(0), request.you.body.size()));
+        return new MoveRequest(getStandardGame(), request.turn + 1, request.board, new Snake(request.you.id, request.you.name, request.you.health, newBody, request.you.latency, newBody.get(0), request.you.body.size()));
     }
 
     private boolean isAlive(MoveRequest request) {
@@ -118,6 +122,10 @@ public class MainResourceTest {
 
     private boolean isHealthy(int you) {
         return you > 0;
+    }
+
+    private Game getStandardGame() {
+        return new Game(new Ruleset(RulesetName.STANDARD, "1.0.0", null));
     }
 
     private boolean hasCollidedWithBody(MoveRequest request) {

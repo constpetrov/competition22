@@ -5,13 +5,13 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class Game {
+public class RulesetSettingsRoyale {
 
     @JsonProperty
-    public final Ruleset ruleset;
+    public final int shrinkEveryNTurns;
 
     @JsonCreator
-    public Game(@JsonProperty("ruleset") Ruleset ruleset) {
-        this.ruleset = ruleset;
+    public RulesetSettingsRoyale(@JsonProperty("shrinkEveryNTurns") int shrinkEveryNTurns) {
+        this.shrinkEveryNTurns = shrinkEveryNTurns;
     }
 }

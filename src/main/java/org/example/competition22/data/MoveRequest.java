@@ -6,7 +6,8 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class MoveRequest {
-    //    Game game;
+    @JsonProperty
+    public final Game game;
     @JsonProperty
     public final int turn;
     @JsonProperty
@@ -15,9 +16,10 @@ public class MoveRequest {
     public final Snake you;
 
     @JsonCreator
-    public MoveRequest(@JsonProperty("turn") int turn,
+    public MoveRequest(@JsonProperty("game") Game game, @JsonProperty("turn") int turn,
                        @JsonProperty("board") Board board,
                        @JsonProperty("you") Snake you) {
+        this.game = game;
         this.turn = turn;
         this.board = board;
         this.you = you;
@@ -26,7 +28,8 @@ public class MoveRequest {
     @Override
     public String toString() {
         return "MoveRequest{" +
-                "turn=" + turn +
+                "game=" + game +
+                ", turn=" + turn +
                 ", board=" + board +
                 ", you=" + you +
                 '}';
