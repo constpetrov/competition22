@@ -17,12 +17,10 @@ public class FoodSearch {
 
         Map<FoodDirection, Integer> weights = new HashMap<>();
 
-        request.board.food.stream().map(foodCoordinate -> getDirection(request.you.head, foodCoordinate))
-                .forEach(direction -> weights.put(direction, (longestPath - direction.getDistance())));
-
-        for (var foodDirection : weights.keySet()) {
-            directions.put(foodDirection.getFirstDirection(), directions.get(foodDirection.getFirstDirection()) + weights.get(foodDirection));
-        }
+        request.board.food.stream()
+                .map(foodCoordinate -> getDirection(request.you.head, foodCoordinate))
+                .min(FoodDirection::compareTo) // go to the closest food
+                .ifPresent(foodDirection -> directions.put(foodDirection.getFirstDirection(), longestPath - foodDirection.getDistance()));
     }
 
     private static FoodDirection getDirection(Coordinate head, Coordinate food) {
