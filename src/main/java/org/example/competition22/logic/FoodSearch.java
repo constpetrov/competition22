@@ -4,23 +4,21 @@ import org.example.competition22.data.Coordinate;
 import org.example.competition22.data.Direction;
 import org.example.competition22.data.MoveRequest;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.OptionalInt;
 
 public class FoodSearch {
     public static void searchFood(MoveRequest request, Map<Direction, Integer> directions) {
         var longestPath = request.board.height + request.board.width;
-        final OptionalInt maxLength = request.board.snakes.stream().mapToInt(s -> s.length).max();
-        if (request.you.health > 1.5 * longestPath && request.you.length >= maxLength.orElse(Integer.MAX_VALUE)) return;
-
-        Map<FoodDirection, Integer> weights = new HashMap<>();
-
-        request.board.food.stream()
-                .map(foodCoordinate -> getDirection(request.you.head, foodCoordinate))
-                .min(FoodDirection::compareTo) // go to the closest food
-                .ifPresent(foodDirection -> directions.put(foodDirection.getFirstDirection(), longestPath - foodDirection.getDistance()));
+        final var maxLength = request.board.snakes.stream().map(s -> s.length).max(Integer::compareTo).get(); //there is always at least one snake
+        if (request.you.health < 1.5 * longestPath || //we are not healthy enough
+                (request.you.length < maxLength &&  //we are not the longest
+                request.board.snakes.size() > 1)) { //we are not alone
+            request.board.food.stream()
+                    .map(foodCoordinate -> getDirection(request.you.head, foodCoordinate))
+                    .min(FoodDirection::compareTo) // go to the closest food
+                    .ifPresent(foodDirection -> directions.put(foodDirection.getFirstDirection(), longestPath - foodDirection.getDistance()));
+        }
     }
 
     private static FoodDirection getDirection(Coordinate head, Coordinate food) {
@@ -43,18 +41,16 @@ public class FoodSearch {
 
     private static class FoodDirection {
         private final List<Move> moves = new java.util.ArrayList<>();
-        private int distance;
 
         public FoodDirection() {
         }
 
         public void add(Move move) {
             this.moves.add(move);
-            this.distance += move.getDistance();
         }
 
         public int getDistance() {
-            return distance;
+            return moves.stream().mapToInt(Move::getDistance).sum();
         }
 
         public Direction getFirstDirection() {
@@ -62,13 +58,13 @@ public class FoodSearch {
         }
 
         public int compareTo(FoodDirection foodDirection) {
-            return Integer.compare(this.distance, foodDirection.distance);
+            return Integer.compare(this.getDistance(), foodDirection.getDistance());
         }
     }
 
     private static class Move {
-        private Direction direction;
-        private int distance;
+        private final Direction direction;
+        private final int distance;
 
         public Move(Direction direction, int steps) {
             this.direction = direction;
