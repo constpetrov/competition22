@@ -11,11 +11,11 @@ import java.util.OptionalInt;
 
 public class FoodSearch {
     public static void searchFood(MoveRequest request, Map<Direction, Integer> directions) {
+        var longestPath = request.board.height + request.board.width;
         final OptionalInt maxLength = request.board.snakes.stream().mapToInt(s -> s.length).max();
-        if (request.you.health > 33 && request.you.length >= maxLength.orElse(Integer.MAX_VALUE)) return;
+        if (request.you.health > 1.5 * longestPath && request.you.length >= maxLength.orElse(Integer.MAX_VALUE)) return;
 
         Map<FoodDirection, Integer> weights = new HashMap<>();
-        var longestPath = request.board.height + request.board.width;
 
         request.board.food.stream().map(foodCoordinate -> getDirection(request.you.head, foodCoordinate))
                 .forEach(direction -> weights.put(direction, (longestPath - direction.getDistance())));
