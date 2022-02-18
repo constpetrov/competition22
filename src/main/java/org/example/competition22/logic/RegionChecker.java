@@ -33,7 +33,7 @@ public class RegionChecker {
         return 0;
     }
 
-    private static boolean isOnBoard(MoveRequest request, Coordinate c) {
+    public static boolean isOnBoard(MoveRequest request, Coordinate c) {
         return request.board.height > c.y && request.board.width > c.x && c.y >= 0 && c.x >= 0;
     }
 }
