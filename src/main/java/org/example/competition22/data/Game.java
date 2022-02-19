@@ -14,4 +14,11 @@ public class Game {
     public Game(@JsonProperty("ruleset") Ruleset ruleset) {
         this.ruleset = ruleset;
     }
+
+    @Override
+    public String toString() {
+        return "Game{" +
+                "ruleset=" + ruleset +
+                '}';
+    }
 }

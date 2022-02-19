@@ -23,4 +23,14 @@ public class RulesetSettingsSquad {
         this.sharedHealth = sharedHealth;
         this.sharedLength = sharedLength;
     }
+
+    @Override
+    public String toString() {
+        return "RulesetSettingsSquad{" +
+                "allowBodyCollisions=" + allowBodyCollisions +
+                ", sharedElimination=" + sharedElimination +
+                ", sharedHealth=" + sharedHealth +
+                ", sharedLength=" + sharedLength +
+                '}';
+    }
 }

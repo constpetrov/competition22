@@ -39,4 +39,16 @@ public class RulesetSettings {
         this.royale = royale;
         this.squad = squad;
     }
+
+    @Override
+    public String toString() {
+        return "RulesetSettings{" +
+                "foodSpawnChance=" + foodSpawnChance +
+                ", minimumFood=" + minimumFood +
+                ", hazardDamagePerTurn=" + hazardDamagePerTurn +
+                ", map='" + map + '\'' +
+                ", royale=" + royale +
+                ", squad=" + squad +
+                '}';
+    }
 }

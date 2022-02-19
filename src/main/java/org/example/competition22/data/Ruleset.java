@@ -23,4 +23,13 @@ public class Ruleset {
         this.version = version;
         this.settings = settings;
     }
+
+    @Override
+    public String toString() {
+        return "Ruleset{" +
+                "name=" + name +
+                ", version='" + version + '\'' +
+                ", settings=" + settings +
+                '}';
+    }
 }

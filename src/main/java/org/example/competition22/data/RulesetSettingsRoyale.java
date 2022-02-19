@@ -14,4 +14,11 @@ public class RulesetSettingsRoyale {
     public RulesetSettingsRoyale(@JsonProperty("shrinkEveryNTurns") int shrinkEveryNTurns) {
         this.shrinkEveryNTurns = shrinkEveryNTurns;
     }
+
+    @Override
+    public String toString() {
+        return "RulesetSettingsRoyale{" +
+                "shrinkEveryNTurns=" + shrinkEveryNTurns +
+                '}';
+    }
 }
