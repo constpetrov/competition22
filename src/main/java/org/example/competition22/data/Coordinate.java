@@ -8,8 +8,10 @@ import java.util.List;
 import java.util.Objects;
 
 public class Coordinate {
-    @JsonProperty public final int x;
-    @JsonProperty public final int y;
+    @JsonProperty
+    public final int x;
+    @JsonProperty
+    public final int y;
 
     @JsonCreator
     public Coordinate(@JsonProperty("x") int x,
@@ -18,21 +20,41 @@ public class Coordinate {
         this.y = y;
     }
 
-    public List<Coordinate> neighbours() {
+    public List<Coordinate> neighbours(MoveRequest request) {
         return Arrays.asList(
-                new Coordinate(x, y+1),
-                new Coordinate(x, y-1),
-                new Coordinate(x+1, y),
-                new Coordinate(x-1, y)
+                getNextCoordinate(request, Direction.UP),
+                getNextCoordinate(request, Direction.DOWN),
+                getNextCoordinate(request, Direction.LEFT),
+                getNextCoordinate(request, Direction.RIGHT)
         );
     }
 
-    public static Coordinate getNextCoordinate(Coordinate head, Direction direction) {
+    public static Coordinate getNextCoordinate(MoveRequest request, Direction direction) {
+        return getNextCoordinate(request, request.you.head, direction);
+    }
+
+    public static Coordinate getNextCoordinate(MoveRequest request, Coordinate point, Direction direction) {
+        if (request.game.ruleset.name == RulesetName.WRAPPED) {
+            return getNextCoordinateWrapped(request.board, point, direction);
+        }
+        return getNextCoordinateStandard(request.board, point, direction);
+    }
+
+    private static Coordinate getNextCoordinateStandard(Board board, Coordinate point, Direction direction) {
         return switch (direction) {
-            case UP -> new Coordinate(head.x, head.y + 1);
-            case DOWN -> new Coordinate(head.x, head.y - 1);
-            case LEFT -> new Coordinate(head.x - 1, head.y);
-            case RIGHT -> new Coordinate(head.x + 1, head.y);
+            case UP -> new Coordinate(point.x, point.y + 1);
+            case DOWN -> new Coordinate(point.x, point.y - 1);
+            case LEFT -> new Coordinate(point.x - 1, point.y);
+            case RIGHT -> new Coordinate(point.x + 1, point.y);
+        };
+    }
+
+    private static Coordinate getNextCoordinateWrapped(Board board, Coordinate point, Direction direction) {
+        return switch (direction) {
+            case UP -> new Coordinate(point.x, (point.y + 1) % board.height);
+            case DOWN -> new Coordinate(point.x, (point.y - 1 + board.height) % board.height);
+            case LEFT -> new Coordinate((point.x - 1 + board.width) % board.width, point.y);
+            case RIGHT -> new Coordinate((point.x + 1) % board.width, point.y);
         };
     }
 

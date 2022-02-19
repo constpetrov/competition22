@@ -4,11 +4,8 @@ package org.example.competition22;
 import org.example.competition22.data.Board;
 import org.example.competition22.data.Coordinate;
 import org.example.competition22.data.Direction;
-import org.example.competition22.data.Game;
 import org.example.competition22.data.MoveRequest;
 import org.example.competition22.data.MoveResponse;
-import org.example.competition22.data.Ruleset;
-import org.example.competition22.data.RulesetName;
 import org.example.competition22.data.Snake;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -17,7 +14,6 @@ import org.junit.runner.RunWith;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
-import java.util.List;
 import java.util.Map;
 
 import static org.junit.Assert.assertEquals;
@@ -25,7 +21,7 @@ import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertTrue;
 
 @RunWith(org.junit.runners.JUnit4.class)
-public class MainResourceTest {
+public class MainResourceTest extends TestBase {
 
     @Test
     public void assignWeightsTestGoAnywhere() {
@@ -105,7 +101,7 @@ public class MainResourceTest {
 
     private MoveRequest updateMoveRequest(MoveRequest request, MoveResponse response) {
         var newBody = new ArrayList<Coordinate>();
-        newBody.add(Coordinate.getNextCoordinate(request.you.head, Direction.valueOf(response.move.toUpperCase())));
+        newBody.add(Coordinate.getNextCoordinate(request, Direction.valueOf(response.move.toUpperCase())));
         newBody.addAll(request.you.body.subList(0, request.you.body.size() - 1));
         return new MoveRequest(getStandardGame(), request.turn + 1, request.board, new Snake(request.you.id, request.you.name, request.you.health, newBody, request.you.latency, newBody.get(0), request.you.body.size()));
     }
@@ -122,10 +118,6 @@ public class MainResourceTest {
 
     private boolean isHealthy(int you) {
         return you > 0;
-    }
-
-    private Game getStandardGame() {
-        return new Game(new Ruleset(RulesetName.STANDARD, "1.0.0", null));
     }
 
     private boolean hasCollidedWithBody(MoveRequest request) {

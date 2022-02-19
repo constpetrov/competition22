@@ -4,6 +4,7 @@ import org.example.competition22.data.Board;
 import org.example.competition22.data.Coordinate;
 import org.example.competition22.data.Direction;
 import org.example.competition22.data.MoveRequest;
+import org.example.competition22.data.RulesetName;
 
 import java.util.HashSet;
 import java.util.Map;
@@ -17,25 +18,27 @@ public class DepthChecker {
             final Set<Coordinate> obstacles = request.board.snakes.stream()
                     .flatMap(s -> s.body.subList(0,s.body.size()-1).stream())
                     .collect(Collectors.toSet());
-            final Coordinate nextCoordinate = Coordinate.getNextCoordinate(request.you.head, direction);
+            final Coordinate nextCoordinate = Coordinate.getNextCoordinate(request, direction);
             LongAdder acc = new LongAdder();
-            calcDepth(nextCoordinate, new HashSet<>(obstacles), request.board, acc);
+            calcDepth(nextCoordinate, new HashSet<>(obstacles), request, acc);
             final double score = acc.doubleValue() / (request.board.width * request.board.height);
             directions.put(direction, directions.get(direction) * score);
         });
     }
 
-    private static void calcDepth(Coordinate point, Set<Coordinate> obstacles, Board board, LongAdder acc) {
-        if (point.x < 0 || point.x >= board.width
-                || point.y < 0 || point.y >= board.height) return;
+    private static void calcDepth(Coordinate point, Set<Coordinate> obstacles, MoveRequest request, LongAdder acc) {
+        if (point.x < 0 || point.x >= request.board.width
+                || point.y < 0 || point.y >= request.board.height) return;
         if (obstacles.contains(point)) return;
+        if (request.game.ruleset.name == RulesetName.WRAPPED &&
+                acc.longValue() >= request.board.height * request.board.width) return;
 
         acc.increment();
         obstacles.add(point);
 
         for (Direction stepDirection : Direction.values()) {
-            final Coordinate nextPoint = Coordinate.getNextCoordinate(point, stepDirection);
-            calcDepth(nextPoint, obstacles, board, acc);
+            final Coordinate nextPoint = Coordinate.getNextCoordinate(request, point, stepDirection);
+            calcDepth(nextPoint, obstacles, request, acc);
         }
     }
 }

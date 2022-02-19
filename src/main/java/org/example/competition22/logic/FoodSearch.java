@@ -26,7 +26,7 @@ public class FoodSearch {
 
     private static void dePrioritizeFood(MoveRequest request, Map<Direction, Double> directions) {
         directions.keySet().forEach(direction -> {
-            final Coordinate move = Coordinate.getNextCoordinate(request.you.head, direction);
+            final Coordinate move = Coordinate.getNextCoordinate(request, direction);
             if (request.board.food.contains(move)) {
                 directions.put(direction, directions.get(direction) / 10);
             }
